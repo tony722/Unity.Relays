@@ -1,0 +1,116 @@
+
+
+//#ENABLE_TRACE
+
+/*******************************************************************************************
+  Compiler Directives
+*******************************************************************************************/
+// #HINT ""
+
+#ENABLE_STACK_CHECKING
+#ENABLE_DYNAMIC 
+#DEFAULT_VOLATILE
+
+#HELP_BEGIN
+
+Copyright (C) 2024 Anthony Evert 
+Programmer: 		Tony Evert / tony722@gmail.com
+Version:   			1.0.0
+
+#HELP_END
+
+/*******************************************************************************************
+  Include Libraries
+*******************************************************************************************/
+#USER_SIMPLSHARP_LIBRARY "AET.Unity.Relays"
+
+/*******************************************************************************************
+  Inputs
+*******************************************************************************************/
+DIGITAL_INPUT _skip_,_skip_,_skip_,_skip_,_skip_,_skip_;
+DIGITAL_INPUT Shade_Up, Shade_Down;
+DIGITAL_INPUT _skip_,_skip_,_skip_,_skip_,_skip_,_skip_,_skip_,_skip_;
+DIGITAL_INPUT Disabled_State, Disable, Enable;
+
+/*******************************************************************************************
+  Outputs
+*******************************************************************************************/
+DIGITAL_OUTPUT _skip_,_skip_,_skip_,_skip_,_skip_,_skip_;
+DIGITAL_OUTPUT Shade_Up_F, Shade_Down_F, Shade_Moving_Up_F, Shade_Moving_Down_F;
+DIGITAL_OUTPUT Shade_Up_Relay, Shade_Stop_Relay, Shade_Down_Relay;
+DIGITAL_OUTPUT Shade_Up_Stop_Relay, Shade_Down_Stop_Relay;
+DIGITAL_OUTPUT _skip_,_skip_;
+DIGITAL_OUTPUT Disabled_F;
+INTEGER_PARAMETER Shade_Moving_Time, Lockout_Time, Press_Hold_Time, Relay_Pulse_Time, Disable_Mode; 
+#BEGIN_PARAMETER_PROPERTIES Shade_Moving_Time
+   propValidUnits = unitTime;
+   propDefaultValue = 30s;
+#END_PARAMETER_PROPERTIES
+#BEGIN_PARAMETER_PROPERTIES Lockout_Time
+   propValidUnits = unitTime;
+   propDefaultValue = 1s;
+#END_PARAMETER_PROPERTIES
+#BEGIN_PARAMETER_PROPERTIES Press_Hold_Time
+   propValidUnits = unitTime;
+   propDefaultValue = 1s;
+#END_PARAMETER_PROPERTIES
+#BEGIN_PARAMETER_PROPERTIES Relay_Pulse_Time
+   propValidUnits = unitTime;
+   propDefaultValue = 0.5s;
+#END_PARAMETER_PROPERTIES
+    
+
+/*******************************************************************************************
+  Global Variables
+*******************************************************************************************/
+ShadeUpDownStopRelayController relays;
+
+/*******************************************************************************************
+  Functions
+*******************************************************************************************/
+callback function TriggerUpRelay() { pulse(Relay_Pulse_Time, Shade_Up_Relay); }
+callback function TriggerDownRelay() { pulse(Relay_Pulse_Time, Shade_Down_Relay); }
+callback function TriggerStopRelay() { pulse(Relay_Pulse_Time, Shade_Stop_Relay); }
+callback function TriggerUpStopRelay() { pulse(Relay_Pulse_Time, Shade_Up_Stop_Relay); }
+callback function TriggerDownStopRelay() { pulse(Relay_Pulse_Time, Shade_Down_Stop_Relay); }
+callback function Up_F(integer value) { Shade_Up_F = value; }
+callback function Down_F(integer value) { Shade_Down_F = value; }
+callback function MovingUp_F(integer value) { Shade_Moving_Up_F = value; }
+callback function MovingDown_F(integer value) { Shade_Moving_Down_F = value; }
+callback function DisabledF(integer value) { Disabled_F = value; }
+
+/*******************************************************************************************
+  Events
+*******************************************************************************************/
+PUSH Shade_Up { relays.UpPress(); }
+PUSH Shade_Down { relays.DownPress(); }
+RELEASE Shade_Up { relays.UpRelease(); }
+RELEASE Shade_Down  { relays.DownRelease(); }
+
+PUSH Disabled_State { relays.Disable(); }
+RELEASE Disabled_State { relays.Enable(); }
+
+PUSH Disable { relays.Disable(); }
+PUSH Enable { relays.Enable(); }
+
+/*******************************************************************************************
+  Main()
+*******************************************************************************************/
+
+Function Main() { 
+  WaitForInitializationComplete();
+  relays.ShadeMovingTimeMs = Shade_Moving_Time * 10;
+  relays.LockoutTimeMs = Lockout_Time * 10;
+  relays.PressHoldTimeMs = Press_Hold_Time * 10;
+  relays.SetDisableMode(Disable_Mode);
+  RegisterDelegate(relays, TriggerUpRelay, TriggerUpRelay);
+  RegisterDelegate(relays, TriggerDownRelay, TriggerDownRelay);
+  RegisterDelegate(relays, TriggerStopRelay, TriggerStopRelay);
+  RegisterDelegate(relays, TriggerUpStopRelay, TriggerUpStopRelay);
+  RegisterDelegate(relays, TriggerDownStopRelay, TriggerDownStopRelay);
+  RegisterDelegate(relays, Up_F, Up_F);
+  RegisterDelegate(relays, Down_F, Down_F);
+  RegisterDelegate(relays, MovingUp_F, MovingUp_F);
+  RegisterDelegate(relays, MovingDown_F, MovingDown_F);
+  RegisterDelegate(relays, Disabled_F, DisabledF);    
+}

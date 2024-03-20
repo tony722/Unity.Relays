@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AET.Unity.Relays", "AET.Unity.Relays\AET.Unity.Relays.csproj", "{A06FD27D-2E4B-4D66-8831-7E3C90050F2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E03E4C85-3B33-470D-9A90-05A61B654090}"
+	ProjectSection(SolutionItems) = preProject
+		AET.Unity.Relays.vsmdi = AET.Unity.Relays.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AET.Unity.Relays.Tests", "AET.Unity.Relays.Tests\AET.Unity.Relays.Tests.csproj", "{4E401C7F-21EF-48A0-8294-06F2859748D8}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AET.Unity.Relays.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A06FD27D-2E4B-4D66-8831-7E3C90050F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A06FD27D-2E4B-4D66-8831-7E3C90050F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A06FD27D-2E4B-4D66-8831-7E3C90050F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A06FD27D-2E4B-4D66-8831-7E3C90050F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E401C7F-21EF-48A0-8294-06F2859748D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E401C7F-21EF-48A0-8294-06F2859748D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E401C7F-21EF-48A0-8294-06F2859748D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E401C7F-21EF-48A0-8294-06F2859748D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
