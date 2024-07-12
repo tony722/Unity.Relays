@@ -148,6 +148,19 @@ namespace AET.Unity.Relays.Tests {
       //stopped
       commands.Should().BeEquivalentTo("Up", "MovingUp_F=1", "MovingUp_F=0", "UpStop", "Stop", "Down", "MovingDown_F=1", "MovingDown_F=0", "DownStop", "Stop");
     }
+
+    [TestMethod]
+    public void Down_HadPreviouslyFinishedGoingUp_GoesDown() {
+      controller.UpPress();
+      controller.UpRelease();
+      pressHoldUpTimer.TimerElapsed();
+      shadeMovingTimer.TimerElapsed();
+      commands.Clear();
+      controller.DownPress();
+      controller.DownRelease();
+      pressHoldDownTimer.TimerElapsed();
+      commands.Should().BeEquivalentTo("Down", "MovingDown_F=1");
+    }
     #endregion
 
     #region Relay Disable Tests

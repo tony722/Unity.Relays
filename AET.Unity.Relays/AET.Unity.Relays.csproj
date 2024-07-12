@@ -72,7 +72,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rem  S# preparation will execute after these operations
-PowerShell -ExecutionPolicy bypass -File Z:\Library\AET\SIMPL#\PostBuildCopy.ps1 "$(TargetDir)|$(SolutionDir)SIMPL Windows\"</PostBuildEvent>
+PowerShell -ExecutionPolicy bypass -File Z:\Library\AET\SIMPL#\PostBuildCopy.ps1 "$(TargetDir)|$(TargetDir)\..\..\..\SIMPL Windows\"</PostBuildEvent>
     <PreBuildEvent>del "$(TargetDir)*.clz"</PreBuildEvent>
   </PropertyGroup>
 </Project>

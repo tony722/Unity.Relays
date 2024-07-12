@@ -62,9 +62,7 @@ namespace AET.Unity.Relays {
 
     #region Shade Moving
     public ITimer ShadeMovingTimer {
-      get { return shadeMovingTimer ?? (ShadeMovingTimer = new CrestronTimer()); }
-      set { shadeMovingTimer = value; }
-    }
+      get { return shadeMovingTimer ?? (ShadeMovingTimer = new CrestronTimer()); } set { shadeMovingTimer = value; } }
 
     public ITimer LockoutTimer {
       get { return lockoutTimer ?? (LockoutTimer = new CrestronTimer()); }
@@ -97,7 +95,10 @@ namespace AET.Unity.Relays {
       UpRelay();
       MovingUp_F(1);
       movingDirection = Dir.Up;
-      ShadeMovingTimer.Start(ShadeMovingTimeMs, (o) => MovingUp_F(0));
+      ShadeMovingTimer.Start(ShadeMovingTimeMs, (o) => {
+        MovingUp_F(0);
+        movingDirection = Dir.Stopped;
+      });
     }
    
 
@@ -105,7 +106,10 @@ namespace AET.Unity.Relays {
       DownRelay();
       MovingDown_F(1);
       movingDirection = Dir.Down;
-      ShadeMovingTimer.Start(ShadeMovingTimeMs, (o) => MovingDown_F(0));
+      ShadeMovingTimer.Start(ShadeMovingTimeMs, (o) => {
+        MovingDown_F(0);
+        movingDirection = Dir.Stopped;
+      });
     }
 
 
